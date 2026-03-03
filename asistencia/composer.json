@@ -1,0 +1,17 @@
+{
+    "name": "ven06/asistencia",
+    "autoload": {
+        "psr-4": {
+            "Ven06\\Asistencia\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dario Moreda",
+            "email": "dariosergio@hotmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.30"
+    }
+}

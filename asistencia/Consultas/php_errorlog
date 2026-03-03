@@ -1,0 +1,13 @@
+[28-Jan-2026 15:23:03 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to undefined function exportToExcelUniversal() in /home/customer/www/lagoelectromecanica.com/public_html/asistencia/Consultas/accesos.php:119
+Stack trace:
+#0 {main}
+  thrown in /home/customer/www/lagoelectromecanica.com/public_html/asistencia/Consultas/accesos.php on line 119
+[28-Jan-2026 15:23:30 America/Argentina/Buenos_Aires] PHP Fatal error:  Uncaught Error: Call to undefined function exportToExcelUniversal() in /home/customer/www/lagoelectromecanica.com/public_html/asistencia/Consultas/accesos.php:119
+Stack trace:
+#0 {main}
+  thrown in /home/customer/www/lagoelectromecanica.com/public_html/asistencia/Consultas/accesos.php on line 119
+[29-Jan-2026 12:22:20 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/customer/www/lagoelectromecanica.com/public_html/asistencia/Consultas/solo_exportar.php on line 12
+[29-Jan-2026 18:19:23 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/customer/www/lagoelectromecanica.com/public_html/asistencia/Consultas/accesos.php on line 122
+[29-Jan-2026 18:19:32 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/customer/www/lagoelectromecanica.com/public_html/asistencia/Consultas/accesos.php on line 122
+[29-Jan-2026 18:20:06 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/customer/www/lagoelectromecanica.com/public_html/asistencia/Consultas/accesos.php on line 122
+[29-Jan-2026 18:20:17 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/customer/www/lagoelectromecanica.com/public_html/asistencia/Consultas/accesos.php on line 122

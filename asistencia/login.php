@@ -1,12 +1,10 @@
+<?php session_start(); ?>
 <?php include ("db.php"); ?>
 <?php include ("includes/header.php"); ?>
-
 <?php 
-		if (true){//!session_status()
-			session_start();
-		}	
-
 	if (isset($_SESSION['mensaje'])) { ?>
+
+
 
 	<div class="alert alert-<?= $_SESSION['tipo_mensaje'] ?> alert-dismissible fade show" role="alert">
 		<?= $_SESSION['mensaje'] ?>

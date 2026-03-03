@@ -28,8 +28,28 @@ if(isset($_POST['usuario'])){
     die("Algo raro pasó :(");
 }
 
+//para saber si estoy en local o en InfinityFree
+
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost:8080', 'localhost:8081', '127.0.0.1:8080']);
+
+if ($isLocal) {
+    // MODO DOCKER (LOCAL)
+    $host = 'db';
+    $user = 'lagoelec_dario';
+    $pass = 'Tq63dsAm6No8';
+} else {
+    // MODO INFINITYFREE (PRODUCCIÓN)
+    $host = 'sql123.infinityfree.com';  // Reemplaza con tu host real
+    $user = 'if0_12345678';             // Reemplaza con tu usuario
+    $pass = 'password_produccion';      // Reemplaza con tu contraseña
+}
+
+$db   = 'lagoelec_asis';  // Nombre de la BD (puede cambiar en producción)
+
+//conexión
+
 try{
-    $base= new PDO("mysql:host=localhost; dbname=lagoelec_asis", "lagoelec_admin", "phVAiGuvwbHs");
+    $base= new PDO("mysql:$host; dbname=$db", $user, $pass);
     //$base= new PDO("mysql:host=localhost; dbname=c1600506_asistencia", "c1600506", "pegi45soVA");
     $base->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $base->exec("SET CHARACTER SET utf8");

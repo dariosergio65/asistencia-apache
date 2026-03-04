@@ -71,43 +71,41 @@ function clavevalida($clave,&$error_clave){
  }
 
 
-function useracceso($nombreusuario,$accion='ingreso',$lati='nada',$long='nada',$exac='nada') { // registra los ingresos de usuarios y su posicion
-    /* acciones:
-                ingreso x
-                cierre x
-    */
+function useracceso($nombreusuario, $accion = 'ingreso', $lati = null, $long = null, $exac = null) {
     $rutadb = $_SERVER['DOCUMENT_ROOT'] . '/asistencia/db.php';
-    include ($rutadb);
+    include($rutadb);
 
-    date_default_timezone_set('America/Argentina/Buenos_Aires');//configura hora argentina
+    date_default_timezone_set('America/Argentina/Buenos_Aires');
     $fechahora = date("Y-m-d H:i:s");
-
-    $ipuser =  $_SERVER['REMOTE_ADDR'];
+    $ipuser = $_SERVER['REMOTE_ADDR'];
     $requesturi = $_SERVER['REQUEST_URI'];
-    
-    $queryu="SELECT * FROM usuarios WHERE User = '$nombreusuario'";
-    $resultu=mysqli_query($conn,$queryu);
-    if ($resultu) {    
-        $rowest = mysqli_fetch_array($resultu);
-        $miuser = $rowest['User'];
+
+    // Obtener ID del usuario
+    $queryu = "SELECT User FROM usuarios WHERE User = '$nombreusuario'";
+    $resultu = mysqli_query($conn, $queryu);
+    $rowest = mysqli_fetch_array($resultu);
+    $miuser = $rowest['User'];
+
+    mysqli_query($conn, "SET time_zone = '-03:00'");
+
+    if ($lati !== null && $long !== null) {
+        // Ya tenemos coordenadas → ACTUALIZAR el último registro pendiente
+        $sqlupdate = "UPDATE accesos 
+                      SET latitud = '$lati', longitud = '$long', exactitud = '$exac', flag = 1 
+                      WHERE idusuario = '$miuser' AND flag = 0 
+                      ORDER BY id DESC LIMIT 1";
+        mysqli_query($conn, $sqlupdate);
+    } else {
+        // Sin coordenadas → INSERT con flag = 0 y valores vacíos en lat/lon
+        $sqlinsert = "INSERT INTO accesos 
+                      (fechahora, idusuario, accion, ip, requesturi, latitud, longitud, flag) 
+                      VALUES 
+                      ('$fechahora', '$miuser', '$accion', '$ipuser', '$requesturi', '', '', 0)";
+        mysqli_query($conn, $sqlinsert);
     }
-    
-    if(!($lati=='nada')){
-        //mysqli_query($conn, "SET time_zone = '-03:00'"); //para que me de la hora de Argentina
-        $sqlinsert = "UPDATE accesos SET latitud='$lati', longitud='$long', exactitud='$exac', flag=1 
-        WHERE idusuario like '$miuser' AND flag=0;";
-    }else{
-        //die('en funciones');
-        mysqli_query($conn, "SET time_zone = '-03:00'");
-        $sqlinsert = "INSERT INTO accesos (fechahora, idusuario, accion, ip, requesturi) VALUES('$fechahora', '$miuser', '$accion', '$ipuser', '$requesturi' );";
-    }
-    
-    
-    $resulti = mysqli_query($conn,$sqlinsert);
-    mysqli_free_result($resultu); // libero el conjunto de resultados
-    
-    mysqli_close($conn); // cierro la conexion
-        
+
+    mysqli_free_result($resultu);
+    mysqli_close($conn);
 }// fin de la funcion
 
 function comprobar($miusuario,$pantalla){ 

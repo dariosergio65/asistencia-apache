@@ -9,10 +9,22 @@ $usuario=$_SESSION['ingresado'];
 $rutaf = $_SERVER['DOCUMENT_ROOT'] . '/asistencia/includes/funciones.php';
 include ($rutaf);
 
-//$vuelta='/asistencia/Altas/final.php';
-$final='https://lagoelectromecanica.com/asistencia/Altas/final.php';
+// Detectar entorno
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost:8080', 'localhost:8081', '127.0.0.1:8080']);
 
-$bandera=true;
+if ($isLocal) {
+    $base_url = 'http://localhost:8081';
+} else {
+    $base_url = 'https://dario.free.nf';
+}
+
+$final = $base_url . '/asistencia/Altas/final.php';
+
+$bandera = true;
+
+//$vuelta='/asistencia/Altas/final.php';
+//$final='https://dario.free.nf/asistencia/Altas/final.php';
+
 
         if (isset($_SESSION['mensaje'])) { ?>
 

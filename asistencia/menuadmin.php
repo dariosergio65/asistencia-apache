@@ -9,23 +9,39 @@ include ($rutaf);
 $rutaindex = '/asistencia/index.php';
 $usuario=$_SESSION['ingresado']; 
 
-//$pantalla = 'menuadmin0';//ojo al cambiar nombre del archivo php
-$usuarios= 'https://lagoelectromecanica.com/asistencia/abmb/usuarios.php';
-$accesos= 'https://lagoelectromecanica.com/asistencia/Consultas/accesos.php';
+// Detectar si estás en local o producción
+$isLocal = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost:8080', 'localhost:8081', '127.0.0.1:8080']);
 
-include ("includes/headermenu.php");
+if ($isLocal) {
+    $base_url = 'http://localhost:8081';
+} else {
+    $base_url = 'https://dario.free.nf';
+}
+
+
+$usuarios = $base_url . '/asistencia/abmb/usuarios.php';
+$accesos = $base_url . '/asistencia/Consultas/accesos.php';
+
+//$pantalla = 'menuadmin0';//ojo al cambiar nombre del archivo php
+//$usuarios= 'https://dario.free.nf/asistencia/abmb/usuarios.php';
+//$accesos= 'https://dario.free.nf/asistencia/Consultas/accesos.php';
+
+//include ("includes/headermenu.php");
 
 
 ?>
 <?php
 if (isset($_POST['abmusers'])){
-    //header ("location: abmb/usuarios.php");
-    echo '<meta http-equiv="refresh" content="0;url=' . $usuarios . '" />';
+    header ("location: abmb/usuarios.php");
+    //echo '<meta http-equiv="refresh" content="0;url=' . $usuarios . '" />';
 }elseif (isset($_POST['accesos'])){
-    //header ("location: Consultas/accesos.php");
-    echo '<meta http-equiv="refresh" content="0;url=' . $accesos . '" />';
+    header ("location: Consultas/accesos.php");
+    //echo '<meta http-equiv="refresh" content="0;url=' . $accesos . '" />';
 }
+
+include ("includes/headermenu.php");
 ?>
+
 <div class="container p-4">
     <div class="row">
         <div class="col-md-10 mx-auto">
